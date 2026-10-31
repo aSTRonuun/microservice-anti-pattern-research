@@ -1,0 +1,35 @@
+\section{Trabalhos Relacionados}
+\label{sec:relacionados}
+
+Os trabalhos mais próximos desta proposta se dividem pelo tipo de evidência. Um grupo minera repositórios para medir co-evolução entre serviços. O outro parte da experiência de praticantes para descrever o que o compartilhamento causa.
+
+\textbf{Mineração de repositórios.} \citeonline{assuncao2023} analisam 11 sistemas de código aberto, com 7.319 \textit{commits} e 99.804 mudanças atômicas, e concluem que os serviços raramente mudam de forma isolada. Entre as causas que apontam estão a refatoração de APIs compartilhadas e as dependências de bibliotecas externas. É o trabalho mais próximo desta proposta, pois também usa o histórico de repositórios para observar a independência entre serviços. Diferencia-se, porém, em dois pontos: as mudanças foram rotuladas pelos próprios autores, e as bibliotecas aparecem como uma causa entre várias, sem que se isole o efeito dos componentes internos compartilhados, que é o foco deste estudo.
+
+\citeonline{aragona2023} propõem uma métrica de acoplamento lógico entre microsserviços, calculada a partir dos \textit{commits} e sem depender de dados de execução. Em 145 projetos, encontram acoplamento lógico em todos os sistemas, crescendo com o tempo. Este trabalho adota a mesma ideia, tomando a co-mudança como indicador de acoplamento (base da RQ2). A diferença é que a métrica original não investiga o que causa o acoplamento, e aqui ela é cruzada com a dependência de componentes compartilhados. Um estudo posterior dos mesmos autores, \citeonline{aragona2024}, trata do chamado acoplamento aparente e das possibilidades de excluí-lo da medição \pend{A CONFIRMAR: ler o texto completo, pois só o resumo foi consultado}. Ele não aborda componentes compartilhados como causa, mas alerta para um cuidado metodológico que este estudo deve incorporar ao medir co-mudança.
+
+\textbf{Estudos com praticantes.} \citeonline{taibi2018} catalogam 11 \textit{bad smells} a partir de entrevistas com 72 desenvolvedores. O \textit{smell} ``Shared Libraries'' aparece em 11,7\% das 265 más práticas relatadas, e os entrevistados dizem que ele acopla serviços e obriga equipes a se coordenarem. Os próprios autores indicam que a nocividade, baseada em percepção, precisa de validação empírica. Este trabalho responde parcialmente a esse pedido, ao medir o efeito no código e no histórico, e não na opinião.
+
+\citeonline{detoledo2020} entrevistaram seis arquitetos de quatro empresas e relatam que bibliotecas compartilhadas acoplam times, sobrecarregam quem as mantém e exigem várias versões em paralelo. Compartilham com esta proposta a preocupação com a perda de agilidade causada por componentes compartilhados. Diferenciam-se por usar evidência qualitativa e amostra pequena, enquanto aqui se busca evidência quantitativa em sistemas abertos. Já \citeonline{badampudi2025} estudam o reuso de microsserviços em larga escala na Ericsson, com entrevistas e análise temática. Encontram ganhos de qualidade e velocidade, mas também times centrais que viram gargalo e ciclos de \textit{release} em conflito. Tratam da mesma tensão entre reuso e autonomia, porém no nível de serviços reutilizados por vários times e em uma única empresa. Este estudo observa a tensão no nível do código.
+
+\textbf{Síntese.} Há acordo de que compartilhar cria dependência entre serviços e entre equipes. A diferença está na evidência: a mineração mede o acoplamento sem identificar a causa, e os estudos sobre bibliotecas apontam uma causa provável, mas só com relatos. O Quadro~\ref{quad:comparativo} compara os trabalhos com a proposta.
+
+\begin{table}[htb]
+\centering
+\caption{Comparação entre os trabalhos relacionados e a pesquisa proposta}
+\label{quad:comparativo}
+\small
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{3.2cm}|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}p{2cm}|>{\raggedright\arraybackslash}X|}
+\hline
+\textbf{Trabalho} & \textbf{Tipo de evidência} & \textbf{Objeto} & \textbf{Mede co-mudança?} & \textbf{Isola componentes compartilhados?} \\ \hline
+\citeonline{assuncao2023} & Mineração de repositórios & 11 sistemas abertos & Sim & Não (bibliotecas como uma causa entre várias) \\ \hline
+\citeonline{aragona2023} & Mineração de repositórios & 145 projetos abertos & Sim (acoplamento lógico) & Não \\ \hline
+\citeonline{aragona2024} & Não informado \pend{A CONFIRMAR} & Acoplamento aparente & Não informado & Não \\ \hline
+\citeonline{taibi2018} & Entrevistas & 72 desenvolvedores, 61 organizações & Não & Parcial (\textit{smell} ``Shared Libraries'') \\ \hline
+\citeonline{detoledo2020} & Entrevistas & 6 arquitetos, 4 empresas & Não & Sim (bibliotecas), sem medição \\ \hline
+\citeonline{badampudi2025} & Estudo de caso & Ericsson, serviços reutilizados & Não & Parcial (nível de serviço) \\ \hline
+\textbf{Proposta deste trabalho} & Mineração de repositórios & Sistemas abertos (oito, conforme Marco 3) & Sim & Sim (cruza co-mudança com dependência de componentes) \\ \hline
+\end{tabularx}
+\fonte{Elaborado pelos autores.}
+\end{table}
+
+\textbf{Lacuna de pesquisa.} Os estudos de mineração medem o acoplamento entre microsserviços pela co-mudança no histórico de \textit{commits} \cite{aragona2023,assuncao2023}, sem separar a parcela que vem de componentes compartilhados. Já o efeito do compartilhamento sobre a autonomia foi descrito a partir de entrevistas e estudos de caso \cite{taibi2018,detoledo2020,badampudi2025}, e \citeonline{taibi2018} reconhecem que a nocividade apontada pelos entrevistados ainda precisa de validação empírica. Nas bases consultadas (ACM Digital Library, IEEE Xplore e Google Scholar, com as strings descritas na Seção \pend{A DEFINIR: seção de método}), não identificamos estudo que relacione a co-mudança entre serviços a componentes internos compartilhados, extraindo a evidência do código e do histórico \pend{A CONFIRMAR: leitura integral de \citeonline{aragona2024}}. Este trabalho busca preencher essa lacuna ao estimar quanto da co-mudança acompanha esses componentes e em que situações o compartilhamento impede a evolução independente dos serviços.

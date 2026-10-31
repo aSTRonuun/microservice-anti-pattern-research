@@ -1,0 +1,25 @@
+.DS_Store
+# Material de contexto da disciplina (contém dados pessoais dos integrantes)
+context/
+# Artefatos de compilação LaTeX
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.lol
+*.bbl
+*.blg
+*.brf
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.idx
+*.ilg
+*.ind
+*.glg
+*.glo
+*.gls
+*.ist
+src/documento.pdf

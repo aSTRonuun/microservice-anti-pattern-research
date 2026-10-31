@@ -1,0 +1,18 @@
+\section{Introdução}
+\label{sec:introducao}
+
+A arquitetura de microsserviços organiza um sistema como um conjunto de serviços pequenos e independentes, que se comunicam por mensagens \cite{dragoni2017}. A promessa central dessa abordagem é a autonomia: cada serviço deve poder ser alterado e implantado sem depender dos demais, o que facilitaria sua mudança e substituição \cite{bogner2021}.
+
+Ao mesmo tempo, o reuso de software é uma prática consolidada para reduzir esforço e aumentar a qualidade \cite{krueger1992,frakes2005}. Em microsserviços, o reuso aparece na forma de bibliotecas e componentes internos usados por vários serviços. Aqui está a tensão: quando um componente é compartilhado, uma mudança nele pode obrigar todos os serviços que o utilizam a serem modificados, testados e implantados juntos. A literatura já registra esse risco. \citeonline{taibi2018} catalogam o uso de bibliotecas compartilhadas como \textit{bad smell} de microsserviços, e \citeonline{detoledo2020} relatam que elas acoplam equipes e atrasam correções. \citeonline{badampudi2025} observam conflito semelhante entre reuso e autonomia dos times em um contexto industrial.
+
+Grande parte dessa evidência vem de entrevistas, ou seja, da percepção de quem desenvolve. Estudos que mineram repositórios mostram que os serviços raramente evoluem isolados \cite{assuncao2023} e que há acoplamento lógico, medido pela co-mudança nos \textit{commits}, em todos os sistemas analisados \cite{aragona2023}. Esses estudos, porém, não separam quanto desse acoplamento vem de componentes compartilhados. Até onde foi possível verificar nas bases consultadas, falta, portanto, evidência extraída do código e do histórico sobre se o compartilhamento de fato reduz a independência entre serviços e em que condições isso ocorre. Essa lacuna importa na prática: se o reuso corrói a autonomia sem que a equipe perceba, o sistema paga o custo de ser distribuído sem obter o benefício da independência.
+
+O \textbf{objetivo geral} deste trabalho é analisar como o compartilhamento de componentes afeta a autonomia de evolução e implantação de microsserviços, com base em indicadores de acoplamento extraídos de repositórios de sistemas reais. Os \textbf{objetivos específicos} são: (i) mapear os componentes compartilhados e o número de serviços que dependem de cada um; (ii) levantar, no histórico de \textit{commits}, a co-mudança entre serviços associada a esses componentes; e (iii) caracterizar as condições em que o compartilhamento se associa à perda de autonomia, considerando o conteúdo do componente e sua abrangência. Esses objetivos orientam três questões de pesquisa:
+
+\begin{itemize}
+  \item \textbf{RQ1:} Em que medida os serviços dependem de componentes compartilhados, considerando quantos serviços usam cada componente?
+  \item \textbf{RQ2:} Que indícios de perda de autonomia, como mudanças coordenadas entre serviços, estão associados a esses componentes?
+  \item \textbf{RQ3:} Em que condições o reuso de um componente compromete a autonomia dos serviços que dependem dele?
+\end{itemize}
+
+A contribuição esperada é uma caracterização, baseada em dados, das situações em que reutilizar um componente custa autonomia aos serviços, além de indicadores observáveis no repositório que permitam às equipes avaliar seus componentes compartilhados antes que o problema se instale. O restante do texto está organizado assim: a Seção~\ref{sec:relacionados} apresenta os trabalhos relacionados, a Seção~\ref{sec:fundamentacao} apresenta a fundamentação teórica, e as demais seções descrevem o método e os resultados esperados \pend{A DEFINIR}.

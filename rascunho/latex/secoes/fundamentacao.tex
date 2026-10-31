@@ -1,0 +1,22 @@
+\section{Fundamentação Teórica}
+\label{sec:fundamentacao}
+
+Esta seção apresenta os conceitos que sustentam as decisões do estudo: o que é autonomia em microsserviços, o que se entende por reuso e componente compartilhado, como o acoplamento é definido e medido, e quais cuidados a mineração de repositórios exige.
+
+\subsection{Microsserviços e autonomia}
+
+Um microsserviço é, em linhas gerais, um processo independente que interage com os demais por troca de mensagens, e uma arquitetura de microsserviços é um sistema distribuído formado só por esses serviços \cite{dragoni2017}. A pesquisa sobre como arquitetar sistemas com microsserviços já foi sistematizada em mapeamentos da literatura \cite{difrancesco2019}. A implantação independente é considerada um princípio central em grande parte das definições de microsserviços \cite{neri2019}. O ganho esperado está em ter serviços de granularidade fina, fracamente acoplados e implantáveis de forma independente, que deveriam ser fáceis de alterar e substituir \cite{bogner2021}. Trata-se de uma promessa de projeto, e a literatura registra desafios para mantê-la na prática \cite{jamshidi2018}. Neste trabalho, \textbf{autonomia} é a capacidade de um serviço mudar e ser implantado sem exigir mudança simultânea em outros serviços. É essa propriedade que se quer verificar, e a co-mudança entre serviços será o indício observável de sua perda.
+
+\subsection{Reuso de software e componentes compartilhados}
+
+Reuso é a criação de sistemas a partir de artefatos já existentes, em vez de construí-los do zero \cite{krueger1992}, prática que a pesquisa em engenharia de software associa a ganhos de produtividade e qualidade \cite{frakes2005}. Em um sistema de microsserviços, o reuso pode ocorrer de formas distintas: um serviço pode ser reutilizado por outros por meio de sua interface, ou o código pode ser reutilizado por meio de bibliotecas e componentes incorporados a cada serviço. Este estudo trata da segunda forma, em que um \textbf{componente compartilhado} é um módulo de código interno ao sistema usado por mais de um serviço. Essa distinção importa porque, no reuso por incorporação de código, uma alteração no componente atinge diretamente o código dos serviços que o usam. Os dois eixos de análise do estudo derivam daí: \textbf{quantos serviços} dependem do componente (abrangência, RQ1) e \textbf{o que ele contém}, código técnico ou regra de domínio (conteúdo, RQ3).
+
+\subsection{Acoplamento e acoplamento lógico}
+
+O acoplamento mede o grau de interdependência entre módulos \cite{stevens1974}, e a ocultação de informação é o critério clássico para decompor sistemas de modo que mudanças em um módulo não se propaguem aos demais \cite{parnas1972}. Há, contudo, duas formas de observá-lo. O acoplamento estrutural vem das dependências declaradas no código. O \textbf{acoplamento lógico} vem da evolução: dois elementos são logicamente acoplados quando mudam juntos repetidamente no histórico \cite{gall1998}, o que pode ser identificado minerando o histórico de versões \cite{zimmermann2005}. As duas visões se relacionam, mas não coincidem \cite{ajienka2017}. Para microsserviços, \citeonline{aragona2023} adaptam o acoplamento lógico aos \textit{commits} que alteram mais de um serviço.
+
+Aqui adota-se o acoplamento lógico, por duas razões. Primeiro, ele mede o que importa para a autonomia, que é a necessidade de mudar serviços juntos, e não apenas a existência de uma dependência. Segundo, os sistemas estudados referenciam os componentes compartilhados diretamente pelo código-fonte, sem pacotes versionados, o que inviabiliza indicadores baseados em versões. A dependência estrutural, por sua vez, será usada para mapear os componentes compartilhados (RQ1), e o cruzamento entre as duas visões responde à RQ2.
+
+\subsection{Mineração de repositórios}
+
+A mineração de repositórios extrai de sistemas de controle de versão e plataformas de hospedagem os dados necessários para estudar a evolução do software. Seu uso exige cuidado com a validade dos dados: \citeonline{kalliamvakou2014} alertam, para repositórios do GitHub, que há riscos de interpretação, como projetos que não refletem desenvolvimento real de software. Neste trabalho, esse cuidado orienta a seleção de sistemas de código aberto e a leitura dos \textit{commits} como indício, e não como prova, de coordenação entre serviços.
