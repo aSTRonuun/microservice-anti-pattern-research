@@ -1,0 +1,21 @@
+id_rahman,projeto,repositorio,linguagem_github,contribuidores,commits_atuais,resultado,motivo
+1,Consul demo,ewolff/microservice-consul,Java,5,88,excluido,I5 (<100 commits)
+2,CQRS microservice application,benwilcock/cqrs-microservice-sampler,Java,2,,excluido,I3 (<3 contribuidores)
+3,E-Commerce App,venkataravuri/e-commerce-microservices-sample,TypeScript,4,,excluido,I4 (linguagem nao Java)
+4,EnterprisePlanner,gfawcett22/EnterprisePlanner,C#,2,,excluido,I3 (<3 contribuidores)
+5,eShopOnContainers,dotnet-architecture/eShopOnContainers,C#,217,,excluido,I4 (linguagem nao Java); arquivado; ramo padrao repo_moved (E2)
+6,FTGO - Restaurant Management,microservices-patterns/ftgo-application,Java,3,295,passa_triagem_barata,
+7,Lakeside Mutual Insurance Company,Microservice-API-Patterns/LakesideMutual,Java,5,48,excluido,I5 (<100 commits)
+8,Lelylan,lelylan/lelylan,(sem linguagem predominante),7,,excluido,I4 (linguagem nao Java)
+9,Microservice Architecture for blog post,fernandoabcampos/spring-netflix-oss-microservices,Shell,2,,excluido,I3 (<3 contribuidores)
+10,Microservices book,ewolff/microservice,Java,10,140,passa_triagem_barata,projeto e o subdiretorio microservice-demo
+11,Open-loyalty,DivanteLtd/open-loyalty,,,,excluido,I2 (HTTP 404 no endereco do conjunto)
+12,Pitstop - Garage Management System,EdwinVW/pitstop,JavaScript,20,,excluido,I4 (linguagem nao Java)
+13,Robot Shop,instana/robot-shop,JavaScript,29,,excluido,I4 (linguagem nao Java); arquivado
+14,Share bike (Chinese),JoeCao/qbike,Java,2,,excluido,I3 (<3 contribuidores)
+15,Spinnaker,spinnaker/spinnaker,Java,986,51216,passa_triagem_barata,a verificar: repositorio atual difere do instantaneo de 2019 (1669 commits no artigo)
+16,Spring Cloud Microservice Example,zpng/spring-cloud-microservice-examples,Java,2,,excluido,I3 (<3 contribuidores)
+17,Spring PetClinic,spring-petclinic/spring-petclinic-microservices,Java,55,768,passa_triagem_barata,
+18,Spring-cloud-netflix-example,yidongnan/spring-cloud-netflix-example,Java,3,65,excluido,I5 (<100 commits)
+19,Tap-And-Eat (Spring Cloud),jferrater/Tap-And-Eat-MicroServices,Shell,1,,excluido,I3 (<3 contribuidores)
+20,Vehicle tracking,mohamed-abdo/vehicle-tracking-microservices,C#,1,,excluido,I3 (<3 contribuidores)
