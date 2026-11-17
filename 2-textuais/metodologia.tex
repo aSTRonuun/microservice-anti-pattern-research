@@ -1,78 +1,97 @@
-\chapter{Livros e Artigos}
-\label{chap:livros e artigos}
+\section{Metodologia}
+\label{sec:metodologia}
 
-\begin{figure}[h!] 
-    \captionsetup{width=7cm}%Da mesma largura que a figura
-	\Caption{\label{fig:reitoria} Capa do livro: Adapta-se: Por que todo sucesso começa com fracasso.}
-	\UFCfig{}{
-		\includegraphics[width=7cm]{figuras/adapt-hb-uk.png}
-	}{
-		\Fonte{Web Site: TimHardford.com}
-	}	
-\end{figure}
+Este estudo conduz uma investigação empírica baseada em mineração de repositórios de software aplicada a sistemas de microsserviços de código aberto escritos em Java. A abordagem combina análise estática de dependências entre serviços e componentes, mineração do histórico de \textit{commits} e classificação manual do conteúdo dos componentes compartilhados.
 
-Adapta-se: Por que todo sucesso começa com fracasso.
-Adaptar-se propões uma abordagem surpreendente para aceitar o fracasso como parte do processo de inovação
-Altas expectativas podem gerar altas decepções quando as previsões dão errado.
-Burocracia e autoridade retêm processos de inovação
-Incentivar e dar mérito pode impulsionar a inovação e o crescimento
+\subsection{Questões de Pesquisa}
+\label{subsec:rqs}
 
-Adapt Neste livro inovador, Tim Harford, o Economista Disfarçado, nos mostra uma nova e inspiradora abordagem para resolver os problemas mais urgentes de nossas vidas. Diante de situações complexas, todos nós nos acostumamos a olhar para nossos líderes para definir um plano de ação e abrir um caminho para o sucesso. Harford argumenta que os desafios de hoje simplesmente não podem ser enfrentados com soluções prontas e opinião de especialistas; o mundo tornou-se muito imprevisível e profundamente complexo. Em vez disso, devemos nos adaptar.
+Para investigar o impacto do reuso interno na autonomia dos serviços, o estudo busca responder a três questões de pesquisa:
 
-Tecendo habilmente psicologia, biologia evolutiva, antropologia, física e economia, juntamente com a história convincente de lições duramente conquistadas aprendidas no campo, Harford faz um caso apaixonado pela importância da tentativa adaptativa e do erro no enfrentamento de questões como mudanças climáticas, pobreza e crises financeiras - bem como no fomento à inovação e criatividade em nossos negócios e vidas pessoais.
+\begin{itemize}
+    \item \textbf{RQ1:} Em que medida os serviços dependem de componentes compartilhados, considerando quantos serviços usam cada componente?
+    \item \textbf{RQ2:} Que indícios de perda de autonomia, como mudanças coordenadas entre serviços, estão associados a esses componentes?
+    \item \textbf{RQ3:} Em que condições o reuso de um componente compromete a autonomia dos serviços que dependem dele?
+\end{itemize}
 
-Nos levando das salas de reuniões corporativas para os desertos do Iraque, Adapt explica claramente os ingredientes necessários para transformar o fracasso em sucesso. É um manual inovador para sobreviver e prosperar em nosso complexo e sempre em mudança.
+\subsection{Definições Operacionais}
+\label{subsec:definicoes}
 
-\begin{figure}[h!] 
-    \captionsetup{width=7cm}%Da mesma largura que a figura
-	\Caption{\label{fig:reitoria} Capa do livro: O Economista disfarçado}
-	\UFCfig{}{
-		\includegraphics[width=7cm]{figuras/the-undercover-economist.png}
-	}{
-		\Fonte{Web Site: TimHardford.com}
-	}	
-\end{figure}
+Para garantir consistência na análise estática dos repositórios, adotam-se as seguintes definições operacionais:
 
-Livro The Undercover Economist 
-A versão de um economista de como as coisas funcionam, este volume envolvente é guia de campo parte para a economia ea parte expor os princípios econômicos à espreita por trás dos eventos diários, explicando tudo, desde engarrafamentos aos preços elevados do café. The Economist secreta é para quem está se perguntou por que o fosso entre países ricos e pobres é tão grande, ou porque não consigo encontrar um carro em segunda mão decente, ou como enganar Starbucks. Este livro oferece a história escondida por trás destas e de outras questões, como o economista Tim Harford varia de África, Ásia, Europa, e, claro, os Estados Unidos para revelar como supermercados, companhias aéreas e cadeias de café - para citar apenas alguns - são aspiração dinheiro de nossas carteiras. Harford perfura os mitos que cercam alguns dos maiores controvérsias de hoje, incluindo o alto custo dos cuidados de saúde; ele revela por que certas leis ambientais pode colocar um sorriso no rosto de um proprietário; e ele explica por que algumas indústrias podem ter altos lucros por razões inocentes, enquanto em outras indústrias algo sinistro está acontecendo. Cobrindo uma gama de conceitos econômicos, incluindo os escassos recursos, poder de mercado, eficiência, manipulação de preços, falha de mercado, informação privilegiada e teoria dos jogos, Harford lança luz sobre como essas forças moldar nossas vidas do dia-a-dia, muitas vezes sem o nosso conhecimento. Mostrando-nos o mundo através dos olhos de um economista, Tim Harford revela que eventos diários são jogos intrincados de negociações, concursos de força e batalhas de inteligência. Escrito com um leve toque e sagacidade manhoso, The Economist disfarçado transforma "a ciência desânimo" em um verdadeiro deleite.
+\begin{itemize}
+    \item \textbf{Serviço:} Módulo de \textit{build} (Maven ou Gradle) que gera uma aplicação executável, identificada por uma classe contendo o método \texttt{main}, pela anotação \texttt{@SpringBootApplication}, ou por um \texttt{Dockerfile}/imagem referenciada em \texttt{docker-compose}. Módulos de infraestrutura genérica (servidores de configuração, descoberta de serviços, \textit{gateways} e painéis administrativos) são registrados, mas não contabilizados como serviços de negócio.
+    \item \textbf{Componente compartilhado:} Módulo de \textit{build} pertencente ao próprio repositório que não constitui um serviço e é declarado como dependência direta (via \texttt{project(':x')} no Gradle ou módulo do mesmo \textit{reactor} no Maven) por pelo menos dois serviços. Dependências de artefatos publicados em repositórios externos (como o Maven Central) não são consideradas.
+    \item \textbf{Abrangência:} Número total de serviços que dependem de um componente compartilhado (direta ou transitivamente), registrando-se separadamente a quantidade de dependentes diretos.
+\end{itemize}
 
-\begin{figure}[h!] 
-    \captionsetup{width=7cm}%Da mesma largura que a figura
-	\Caption{\label{fig:reitoria} Capa do livro: Próximas cinquentas coisas}
-	\UFCfig{}{
-		\includegraphics[width=7cm]{figuras/next50things.png}
-	}{
-		\Fonte{Web Site: TimHardford.com}
-	}	
-\end{figure}
+\subsection{Base de Amostragem e Critérios de Seleção}
+\label{subsec:selecao}
 
- 
+A base de amostragem resulta da união (sem duplicatas por URL) de dois conjuntos públicos consolidados na literatura: (i) o conjunto de Rahman, Panichella e Taibi (2019), composto por 20 projetos do GitHub; e (ii) o conjunto de Amoroso d'Aragona et al.\ (2024), contendo 378 projetos rotulados manualmente a partir do \textit{World of Code}. A inclusão do segundo conjunto justifica-se porque uma pré-triagem realizada em 13 de novembro de 2026 no conjunto de Rahman, Panichella e Taibi (2019) aplicou sequencialmente os critérios I2 a I5 a 20 candidatos e reteve apenas quatro: \texttt{microservices-patterns/ftgo-application} (295 \textit{commits}), \texttt{ewolff/microservice} (140), \texttt{spring-petclinic/spring-petclinic-microservices} (768) e \texttt{spinnaker/spinnaker} (51.216 — a verificar, pois o instantâneo de 2019 registrava 1.669 \textit{commits}).
 
-Livro Next Fifty Things 
-Em Cinquenta Coisas que Fizeram a Economia Moderna, o revolucionário e aclamado livro, séries de rádio e podcast, o economista best-seller Tim Harford nos apresentou uma seleção de cinquenta invenções radicais que mudaram o mundo.
+Os candidatos são submetidos aos seguintes critérios de inclusão (aplicados sequencialmente):
+\begin{itemize}
+    \item \textbf{I1:} Pertencer à base de amostragem unificada;
+    \item \textbf{I2:} Repositório público e acessível na data da coleta, com histórico Git completo;
+    \item \textbf{I3:} Possuir no mínimo 3 contribuidores registrados na API do GitHub;
+    \item \textbf{I4:} Ter Java como linguagem predominante (classificação do GitHub, com conferência manual em casos limítrofes), viabilizando a análise automatizada de arquivos Maven e Gradle;
+    \item \textbf{I5:} Possuir no mínimo 100 \textit{commits} no ramo principal;
+    \item \textbf{I6:} Conter pelo menos 3 serviços de negócio, conforme a definição operacional;
+    \item \textbf{I7:} Conter pelo menos 1 componente compartilhado, conforme a definição operacional.
+\end{itemize}
 
-Agora, neste novo livro, Harford mais uma vez nos traz uma série de "coisas" notáveis, memoráveis, curiosas e muitas vezes inesperadas - invenções que nos ensinam lições por turnos íntimos e arrebatadores sobre a complexa economia mundial em que vivemos hoje.
+Como critérios de exclusão, descartam-se repositórios marcados como \textit{fork} pela API do GitHub (\textbf{E1}), repositórios cujo ramo padrão não contenha o código-fonte do sistema (\textbf{E2}) e entradas duplicadas de um mesmo projeto, mantendo-se aquela com maior histórico (\textbf{E3}). Projetos didáticos ou arquivados não são excluídos, desde que atendam aos limiares mínimos de atividade (\textbf{I3} e \textbf{I5}).
 
-Do tijolo, blockchain e da bicicleta ao fogo, da fábrica e da captação de recursos, e da solar fotovoltaica e do lápis ao selo postal, essa coleção brilhante e esclarecedora ressoa, fascina e estimula. É uma maravilhosa mistura de perspicácia e inspiração de um dos melhores contadores de histórias de não-ficção da Grã-Bretanha.
+O procedimento de seleção ocorre em quatro etapas: (1) triagem automática via API do GitHub para \textbf{I1}--\textbf{I5} e \textbf{E1}--\textbf{E2}; (2) ordenação alfabética por \texttt{owner/repo} em minúsculas seguida de embaralhamento determinístico em Python com a semente fixa \texttt{865681335}, sorteada com \texttt{secrets.randbelow(2\^{}32)} em 13 de novembro de 2026, antes de qualquer consulta ao código-fonte dos candidatos; (3) exame sequencial por análise estática para verificar \textbf{I6} e \textbf{I7}, interrompendo a busca ao atingir o limite de oito sistemas aprovados (ou analisando todos os aprovados caso a lista se esgote antes); e (4) registro integral do funil de seleção, permitindo calcular a prevalência de compartilhamento entre todos os sistemas examinados. Os limiares de \textbf{I3} e \textbf{I5} foram definidos a priori, antes de qualquer consulta ao GitHub; o critério \textbf{I4} (linguagem Java) foi incluído após a pré-triagem revelar a predominância de outras linguagens no conjunto de Rahman, Panichella e Taibi (2019).
 
-\section{Viés do empreendedorismo}\label{sec:exemplo-de-algoritmos-e-figuras}
-Economia Criativa
-Como a economia produziu todas essas coisas incríveis que temos ao nosso redor - computadores e telefones celulares e assim por diante? Havia um monte de idéias, e os bons cresceram e prosperaram. E os maus eram muito impiedosamente eliminados.
+\subsection{Coleta de Dados e Métricas}
+\label{subsec:coleta-metricas}
 
-Objetivo é criar uma rede de artistas e empresários que tenham a capacidade de promover um crescimento sustentável no setor criativo valorizando a criatividade individual ou coletiva, habilidades e talentos.
-Empresas com esse segmento exemplos: Quinto Andar, Canguru, ABlab, Nós Todos Filmes, Aram e Even3
+Para os sistemas selecionados, o histórico completo do ramo principal será extraído utilizando a biblioteca \textit{PyDriller}, desconsiderando \textit{commits} de \textit{merge}. Cada arquivo modificado será mapeado ao diretório do módulo de \textit{build} correspondente (serviço ou componente compartilhado); arquivos que não pertençam ao diretório de nenhum módulo de \textit{build} são desconsiderados no cômputo da co-mudança. Adicionalmente, dois avaliadores independentes classificarão manualmente o código de cada componente compartilhado em três categorias — \textit{técnico}, \textit{domínio} ou \textit{misto} — registrando o grau de concordância entre avaliadores. Uma amostra aleatória de até 20 \textit{commits} multisserviço por sistema (utilizando a mesma semente \texttt{865681335}) também será inspecionada manualmente para verificar se a co-mudança reflete dependência real.
 
+A Tabela~\ref{tab:metricas} sintetiza as métricas definidas para responder às questões de pesquisa.
 
-\section{Artigos}
-\label{sec:Artigos}
+\begin{table}[htbp]
+\centering
+\Caption{\label{tab:metricas} Métricas e variáveis do estudo.}
+\UFCtab{}{
+    \begin{tabular}{p{3.8cm} p{7.0cm} c}
+        \toprule
+        \textbf{Métrica / Variável} & \textbf{Definição Operacional} & \textbf{RQ} \\
+        \midrule
+        Abrangência do componente & Número de serviços dependentes (direta e transitivamente), com registro à parte dos dependentes diretos. & RQ1, RQ3 \\
+        Proporção de serviços dependentes & Parcela dos serviços de um sistema que depende de ao menos um componente compartilhado. & RQ1 \\
+        Proporção de sistemas com compartilhamento & Parcela dos candidatos examinados na etapa estática que atende ao critério \textbf{I7}. & RQ1 \\
+        Índice de co-mudança do par & Índice de Jaccard entre dois serviços $A$ e $B$: razão entre \textit{commits} que alteram $A$ e $B$ simultaneamente e \textit{commits} que alteram $A$ ou $B$. & RQ2 \\
+        Proporção de \textit{commits} multisserviço & Parcela total de \textit{commits} do repositório que modifica dois ou mais serviços. & RQ2 \\
+        Parcela multisserviço que toca componente & Fração dos \textit{commits} multisserviço que também altera um componente compartilhado do qual os serviços envolvidos dependem. & RQ2 \\
+        Taxa de propagação do componente & Entre os \textit{commits} que modificam um componente compartilhado, parcela que também altera ao menos um serviço dependente dele. & RQ3 \\
+        Classe do componente & Categoria atribuída via classificação manual (\textit{técnico}, \textit{domínio} ou \textit{misto}). & RQ3 \\
+        \bottomrule
+    \end{tabular}
+}{
+    \Fonte{Elaborado pelos autores.}
+}
+\end{table}
 
-Tim Hardford publico semanalmente artigos no jornal onde ele trabalha, no Finacial Times, na qual ele abordagens váriados temas, principalmente sobre economia, mas também outros temas como filosofia, finanças, saúde entre outros. Aqui estão alguns exemplos.
+\subsection{Estratégia de Análise}
+\label{subsec:analise}
 
-A ilusão de crescimento de  Liz Truss 
+A análise estatística será conduzida por sistema e de forma agregada, utilizando Python (\textit{pandas} e \textit{SciPy}):
+\begin{itemize}
+    \item \textbf{Para a RQ1:} Estatística descritiva (mediana, intervalo interquartil e valor máximo) da abrangência, da proporção de serviços dependentes e da proporção de sistemas com compartilhamento.
+    \item \textbf{Para a RQ2:} Comparação do índice de co-mudança entre pares de serviços que compartilham ao menos um componente e pares que não compartilham, utilizando o teste não paramétrico $U$ de Mann-Whitney ($\alpha = 0{,}05$, com correção de Holm por sistema) e tamanho de efeito pelo delta de Cliff. Como pares de um mesmo sistema não são independentes, a análise agregada terá caráter descritivo.
+    \item \textbf{Para a RQ3:} Correlação de Spearman entre a abrangência do componente e sua taxa de propagação, além do teste de Kruskal-Wallis para comparar as taxas de propagação entre as classes \textit{técnico}, \textit{domínio} e \textit{misto} (recorrendo à análise descritiva caso alguma categoria apresente amostra reduzida).
+    \item \textbf{Análise de sensibilidade:} Recálculo das métricas de co-mudança removendo \textit{commits} acima do percentil 95 de arquivos modificados em cada sistema, mitigando o viés de alterações em lote.
+\end{itemize}
 
-Quanto dinheiro vai te fazer feliz?
+\subsection{Ameaças à Validade}
+\label{subsec:validade}
 
-Mesmo quando você consegue, às vezes vale a pena tentar de novo
-
-Aborto e mulheres na América: o que os números dizem?
-
+\begin{itemize}
+    \item \textbf{Validade de construção:} A co-mudança no repositório funciona como indício histórico de coordenação, não medindo diretamente a capacidade técnica de implantação independente. Refatorações amplas podem gerar falsos positivos, mitigados pelo corte no percentil 95 e pela inspeção manual de amostra. Além disso, a definição de componente cobre apenas dependências declaradas nos arquivos de \textit{build}, não capturando código duplicado entre módulos.
+    \item \textbf{Validade interna:} Alterações transversais, bibliotecas externas e práticas específicas de \textit{commit} de cada equipe podem influenciar a co-mudança independentemente dos componentes compartilhados \cite{assuncao2023}. A comparação pareada dentro do mesmo sistema (pares com e sem componente em comum) busca controlar variáveis confundidoras do projeto.
+    \item \textbf{Validade externa:} Os resultados restringem-se a sistemas Java organizados em monorepositórios que utilizam referências internas de \textit{build}, não sendo diretamente generalizáveis para arquiteturas poliglotas, múltiplos repositórios ou pacotes versionados. A não exclusão de projetos didáticos e de demonstração delimita o escopo da generalização de forma análoga à limitação apontada por \citeonline{assuncao2023}, cuja amostra é composta predominantemente por arquiteturas de referência. A exigência de pelo menos um componente (\textbf{I7}) faz com que abrangência, taxas e comparações descrevam sistemas que compartilham, e não microsserviços em geral; a proporção de sistemas com compartilhamento entre os examinados é relatada como indicação de prevalência.
+    \item \textbf{Validade de conclusão:} O limite máximo de oito sistemas e o número potencialmente reduzido de componentes por categoria podem limitar o poder estatístico dos testes, tornando a análise descritiva essencial para interpretar os achados. Os limiares mínimos adotados (3 contribuidores e 100 \textit{commits}) e o tamanho da amostra manual (até 20 \textit{commits} multisserviço por sistema) constituem escolhas metodológicas da equipe sem respaldo direto na literatura, o que representa uma limitação reconhecida.
+\end{itemize}
