@@ -1,0 +1,123 @@
+\chapter{Resultados}
+\label{cap:resultados}
+
+Este capítulo apresenta a seleção do corpus, as respostas às três questões de pesquisa e uma discussão dos achados. Os valores por componente estão no Apêndice~\ref{ap:propagacao}.
+
+\section{Seleção e caracterização do corpus}
+\label{sec:res-corpus}
+
+A união das duas bases resultou em 395 candidatos, já que três projetos aparecem nas duas. A triagem automática excluiu 340: 287 por não terem Java como linguagem predominante (I4), 33 por terem menos de três contribuidores (I3), 11 por não estarem mais acessíveis (I2), 7 por terem menos de 100 \textit{commits} (I5) e 2 por serem \textit{forks} (E1). Os 55 restantes foram embaralhados com a semente definida e examinados na ordem sorteada. Foi preciso examinar 31 candidatos para chegar a oito sistemas aprovados. Dos 23 reprovados, 14 tinham menos de três serviços de negócio, quase sempre um único serviço, e 9 não tinham componente compartilhado. Entre esses últimos estão dois sistemas conhecidos na literatura, o Spring PetClinic Microservices e o exemplo de \texttt{ewolff/microservice}, cujos módulos se ligam apenas pelo POM pai, sem dependências de código entre si.
+
+A Tabela~\ref{tab:corpus} descreve os oito sistemas. O corpus mistura projetos de demonstração pequenos, com 100 a 500 \textit{commits} e até 30 autores, com dois sistemas mantidos por comunidades grandes, o Pravega e o Spinnaker.
+
+\begin{table}[htbp]
+\centering
+\Caption{\label{tab:corpus} Sistemas do corpus, na ordem em que foram aprovados.}
+\UFCtab{}{
+    \footnotesize
+    \begin{tabular}{llrrrrl}
+        \toprule
+        \textbf{Sistema} & \textbf{\textit{Build}} & \textbf{Serviços} & \textbf{Comp.} & \textbf{\textit{Commits}} & \textbf{Autores} & \textbf{Período} \\
+        \midrule
+        pravega/pravega & Gradle & 5 & 13 & 3.075 & 130 & 2016--2025 \\
+        abixen/abixen-platform & Maven & 5 & 1 & 1.186 & 30 & 2016--2022 \\
+        mrbw/chaos-monkey-spring-boot-demo & Maven & 3 & 1 & 100 & 4 & 2018--2019 \\
+        asc-lab/micronaut-microservices-poc & Maven & 8 & 3 & 359 & 12 & 2018--2021 \\
+        recklyss/scaffold-cloud & Maven & 9 & 6 & 168 & 4 & 2019--2020 \\
+        projecteka/consent-manager & Gradle & 3 & 1 & 513 & 28 & 2019--2021 \\
+        spinnaker/spinnaker & Gradle & 13 & 15 & 44.885 & 1.015 & 2012--2026 \\
+        makeitfine-org/mif & Maven & 7 & 1 & 477 & 4 & 2017--2021 \\
+        \bottomrule
+    \end{tabular}
+}{
+    \Fonte{Elaborado pelos autores. \textit{Commits} sem \textit{merge} no ramo padrão.}
+}
+\end{table}
+
+\section{RQ1: dependência de componentes compartilhados}
+\label{sec:res-rq1}
+
+Dos 31 sistemas examinados, 11 têm ao menos um componente compartilhado (35,5\%). Se a conta se limita aos 17 que têm pelo menos três serviços, a proporção sobe para 47,1\%. Compartilhar código entre serviços, portanto, não é raro nem universal nessa população: cerca de metade dos sistemas com mais de dois serviços o faz por meio de módulos de \textit{build}.
+
+Nos oito sistemas do corpus foram identificados 41 componentes compartilhados. A abrangência mediana é de 4 serviços (intervalo interquartil de 3 a 6), e o máximo, 11, aparece em cinco componentes do Spinnaker, como \texttt{kork-web} e \texttt{kork-core}. A dependência é ampla: na mediana, 87\% dos serviços de um sistema usam algum componente compartilhado, e em três sistemas (Chaos Monkey, Pravega e Consent Manager) existe um componente universal, usado por todos os serviços. A Tabela~\ref{tab:rq1} mostra os valores por sistema.
+
+\begin{table}[htbp]
+\centering
+\Caption{\label{tab:rq1} Abrangência dos componentes e proporção de serviços dependentes por sistema.}
+\UFCtab{}{
+    \footnotesize
+    \begin{tabular}{lrrrrr}
+        \toprule
+        \textbf{Sistema} & \textbf{Serviços} & \textbf{Comp.} & \textbf{Abr. mediana (IIQ)} & \textbf{Abr. máx.} & \textbf{Serv. dependentes} \\
+        \midrule
+        abixen-platform & 5 & 1 & 4 & 4 & 80\% \\
+        micronaut-microservices-poc & 8 & 3 & 3 (2,5--3,5) & 4 & 62\% \\
+        mif & 7 & 1 & 4 & 4 & 57\% \\
+        chaos-monkey-spring-boot-demo & 3 & 1 & 3 & 3 & 100\% \\
+        pravega & 5 & 13 & 3 (3--4) & 5 & 100\% \\
+        consent-manager & 3 & 1 & 3 & 3 & 100\% \\
+        scaffold-cloud & 9 & 6 & 6 (3,75--6) & 8 & 89\% \\
+        spinnaker & 13 & 15 & 9 (2--11) & 11 & 85\% \\
+        \bottomrule
+    \end{tabular}
+}{
+    \Fonte{Elaborado pelos autores.}
+}
+\end{table}
+
+Quanto ao conteúdo, 20 componentes foram classificados como técnicos, 16 como de domínio e 5 como mistos. Os avaliadores concordaram em 40 dos 41 casos ($\kappa = 0{,}96$); o único desacordo foi o módulo \texttt{security} do Pravega, que reúne autenticação genérica e regras de autorização sobre \textit{streams} e foi classificado como misto. Os componentes de domínio são de dois tipos: contratos de API de um serviço consumidos por outros, como \texttt{policy-service-api} no Micronaut PoC e \texttt{scaffold-business-sys-api} no Scaffold Cloud, e bibliotecas que concentram o núcleo do sistema, como \texttt{client}, \texttt{server} e \texttt{storage} no Pravega e \texttt{orca-core} no Spinnaker.
+
+\section{RQ2: indícios de perda de autonomia}
+\label{sec:res-rq2}
+
+A cobertura do mapeamento variou bastante. Em seis sistemas, entre 55\% e 87\% dos \textit{commits} alteram algum módulo atual. No Consent Manager e no Spinnaker a cobertura é de 7\% e 2\%, porque o primeiro foi um monólito até agosto de 2020 e o segundo reuniu seus serviços em um monorepositório apenas recentemente. Nesses dois casos, a análise descreve o período posterior à reorganização (35 e 729 \textit{commits}, respectivamente). Por isso, a proporção de \textit{commits} multisserviço é discutida sobre os \textit{commits} mapeados.
+
+Sobre essa base, entre 5\% (Spinnaker) e 46\% (Chaos Monkey e Scaffold Cloud) dos \textit{commits} alteram dois ou mais serviços ao mesmo tempo. A parcela desses \textit{commits} que também altera um componente usado pelos serviços envolvidos tem mediana de 35\% e chega a 76\% no Pravega e a 60\% no Scaffold Cloud. O Chaos Monkey é a exceção, com 4\%: lá os serviços mudam juntos com frequência, mas quase nunca por causa do componente.
+
+O teste entre pares de serviços foi possível em cinco sistemas. No Pravega a comparação é apenas descritiva, porque só um par não compartilha componente (Tabela~\ref{tab:rq2}). No Chaos Monkey e no Consent Manager todos os pares compartilham apenas o componente universal, e não houve grupo de comparação. Em cinco dos seis sistemas com os dois grupos, a mediana do índice de Jaccard é maior entre os pares que compartilham componente. A diferença é significativa no MIF ($p_{Holm} = 0{,}012$; $\delta = 0{,}76$) e no Spinnaker ($p_{Holm} < 0{,}001$; $\delta = 0{,}91$) e se mantém na análise de sensibilidade ($\delta = 0{,}62$ e $0{,}72$). No Pravega o efeito descritivo também é grande ($\delta = 0{,}78$). No Abixen e no Scaffold Cloud a direção é a mesma, com efeito médio ou pequeno e sem significância, e no Micronaut PoC a relação se inverte levemente.
+
+\begin{table}[htbp]
+\centering
+\Caption{\label{tab:rq2} Co-mudança entre serviços por sistema.}
+\UFCtab{}{
+    \footnotesize
+    \begin{tabular}{lrrrrrrr}
+        \toprule
+        \textbf{Sistema} & \textbf{Cobert.} & \textbf{Multi.} & \textbf{Multi. c/ comp.} & \textbf{Jaccard com} & \textbf{Jaccard sem} & \textbf{$p_{Holm}$} & \textbf{$\delta$} \\
+        \midrule
+        abixen-platform & 0,87 & 0,14 & 0,29 & 0,08 (6) & 0,06 (4) & 0,514 & 0,50 \\
+        micronaut-microservices-poc & 0,58 & 0,31 & 0,35 & 0,30 (7) & 0,32 (21) & 0,751 & 0,18 \\
+        mif & 0,72 & 0,10 & 0,24 & 0,22 (6) & 0,04 (15) & 0,012 & 0,76 \\
+        chaos-monkey-spring-boot-demo & 0,55 & 0,45 & 0,04 & -- & 0,79 (3) & -- & -- \\
+        pravega & 0,68 & 0,06 & 0,76 & 0,04 (9) & 0,02 (1) & -- & 0,78 \\
+        consent-manager & 0,07 & 0,34 & 0,58 & -- & 0,29 (3) & -- & -- \\
+        scaffold-cloud & 0,68 & 0,46 & 0,60 & 0,21 (28) & 0,16 (8) & 0,675 & 0,10 \\
+        spinnaker & 0,02 & 0,05 & 0,35 & 0,14 (55) & 0,02 (23) & $<$0,001 & 0,91 \\
+        \bottomrule
+    \end{tabular}
+}{
+    \Fonte{Elaborado pelos autores. Multi.: proporção de \textit{commits} multisserviço entre os mapeados. Jaccard: mediana, com o número de pares entre parênteses. $\delta$: delta de Cliff (positivo quando os pares que compartilham componente mudam mais juntos).}
+}
+\end{table}
+
+A inspeção dos 152 \textit{commits} multisserviço sorteados qualifica esses números. Em 42\% deles a co-mudança reflete uma dependência real: 34 \textit{commits} acompanham uma mudança em componente compartilhado e 30, uma mudança de contrato entre serviços. Os demais são, na maioria, alterações em lote (67), como atualização de versões, \textit{Dockerfiles}, regras de estilo e cabeçalhos de licença. A proporção varia muito entre sistemas. No Pravega (80\%), no Spinnaker (70\%), no Abixen (60\%) e no Scaffold Cloud (55\%) a maior parte da co-mudança tem causa funcional; no MIF (20\%), no Micronaut PoC (10\%) e no Chaos Monkey (nenhum caso) ela é dominada por manutenção em lote. No Spinnaker, a causa mais comum é o contrato entre serviços, como o \textit{gateway} repassando novos parâmetros ao Orca e ao Front50, e os componentes \texttt{kork} aparecem em 3 dos 20 casos.
+
+\section{RQ3: condições em que o compartilhamento compromete a autonomia}
+\label{sec:res-rq3}
+
+A taxa de propagação, ou seja, a parcela das mudanças em um componente que também altera algum serviço dependente, tem mediana de 0,75 entre os 40 componentes com \textit{commits}. Em outras palavras, na maioria dos componentes, três em cada quatro mudanças não ficam restritas a eles.
+
+A abrangência não explica essa taxa. Nos três sistemas com componentes suficientes para o teste, a correlação de Spearman entre abrangência e propagação é fraca e não significativa (Pravega: $\rho = 0{,}14$, $p = 0{,}65$; Scaffold Cloud: $\rho = 0{,}25$, $p = 0{,}64$; Spinnaker: $\rho = -0{,}19$, $p = 0{,}51$), e o mesmo ocorre com os 40 componentes analisados em conjunto ($\rho = 0{,}02$; $p = 0{,}90$). Um componente usado por onze serviços não propaga mais mudanças do que um usado por dois.
+
+A classe do componente também não separa bem os casos. A taxa mediana de propagação é 0,80 nos componentes de domínio, 0,78 nos mistos e 0,70 nos técnicos, mas a diferença não é significativa (Kruskal-Wallis exploratório com os componentes de todos os sistemas: $p = 0{,}95$), e cada classe reúne componentes de comportamento oposto. Entre os de domínio estão tanto as taxas mais altas, nos contratos de API como \texttt{pricing-service-api} (0,96) e \texttt{policy-service-api} (0,94) no Micronaut PoC e \texttt{scaffold-business-sys-api} (0,96) no Scaffold Cloud, quanto algumas das mais baixas, em bibliotecas grandes como \texttt{server} (0,32) e \texttt{client} (0,37) no Pravega e \texttt{orca-core} (0,35) no Spinnaker.
+
+Esse contraste levou a uma análise exploratória que não estava prevista no protocolo. Com os 40 componentes reunidos, a taxa de propagação diminui à medida que o componente cresce, tanto em número de \textit{commits} ($\rho = -0{,}48$; $p = 0{,}002$) quanto em número de arquivos-fonte ($\rho = -0{,}49$; $p = 0{,}002$). Os oito contratos de API, identificados pelo nome do módulo, têm taxa mediana de 0,88, contra 0,68 dos demais, diferença que não chega a ser significativa ($p = 0{,}14$). Como os componentes de um mesmo sistema não são independentes, esses valores servem apenas para orientar estudos futuros.
+
+\section{Discussão}
+\label{sec:discussao}
+
+Os resultados confirmam, com dados de repositório, parte do que os estudos com praticantes descrevem. \citeonline{taibi2018} e \citeonline{detoledo2020} relatam que bibliotecas compartilhadas acoplam serviços, e aqui os pares que compartilham componente mudaram mais juntos em cinco de seis sistemas, com efeito grande e estável nos dois em que o teste foi significativo. Ao mesmo tempo, os dados mostram que essa relação não é uniforme. Em sistemas pequenos de demonstração, como o Chaos Monkey e o Micronaut PoC, os serviços mudam juntos sobretudo por manutenção em lote, e o componente quase não participa. Esse padrão coincide com a observação de \citeonline{assuncao2023} de que os serviços raramente evoluem isolados por causas diversas, e mostra por que a co-mudança bruta, usada por \citeonline{aragona2023}, precisa ser lida junto com a sua causa.
+
+Sobre as condições da RQ3, os dados não confirmam o critério mais intuitivo. A abrangência, que costuma ser a primeira medida para julgar o risco de uma biblioteca compartilhada, não se associou à propagação, e a divisão entre código técnico e de domínio também não separou os componentes que arrastam os serviços dos que evoluem sozinhos. O que apareceu foi outro recorte. Módulos pequenos que descrevem a interface de um serviço propagaram quase todas as suas mudanças, enquanto bibliotecas grandes e muito alteradas, de domínio ou técnicas, mudaram muitas vezes sem tocar nos serviços. Uma leitura possível é que o compartilhamento compromete a autonomia quando o componente é, na prática, o acordo entre os serviços: mudar o componente é mudar esse acordo. Uma biblioteca extensa acumula também mudanças internas, como correções e refatorações, que não chegam aos consumidores. Essa interpretação é uma hipótese, porque surgiu de uma análise não planejada, com componentes que não são independentes entre si.
+
+Para as equipes, o resultado sugere observar a taxa de propagação dos componentes compartilhados, que pode ser calculada a partir do histórico, em vez de contar apenas quantos serviços os usam. Um componente cujas mudanças quase sempre arrastam os serviços dependentes funciona, na prática, como parte de cada um deles. Os limites desses achados, em especial a cobertura reduzida do mapeamento no Spinnaker e no Consent Manager e o caráter de demonstração de vários sistemas, estão descritos na Seção~\ref{sec:validade}.
