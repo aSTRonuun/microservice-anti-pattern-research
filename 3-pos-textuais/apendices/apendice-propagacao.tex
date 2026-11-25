@@ -1,0 +1,61 @@
+\apendice{Taxa de propagação por componente}
+\label{ap:propagacao}
+
+O Quadro~\ref{qua:propagacao} lista os 41 componentes compartilhados do corpus com a classe atribuída, a abrangência, o número de \textit{commits} que alteram o componente e a taxa de propagação.
+
+\begin{quadro}[htbp]
+\centering
+\Caption{\label{qua:propagacao} Componentes compartilhados, classe e taxa de propagação.}
+\UFCqua{}{
+    \scriptsize
+    \begin{tabular}{llcrrr}
+        \toprule
+        \textbf{Sistema} & \textbf{Componente} & \textbf{Classe} & \textbf{Abr.} & \textbf{\textit{Commits}} & \textbf{Propagação} \\
+        \midrule
+        abixen-platform & \texttt{abixen-platform-common} & Misto & 4 & 94 & 0,86 \\
+        micronaut-microservices-poc & \texttt{command-bus} & Técnico & 3 & 19 & 0,95 \\
+        micronaut-microservices-poc & \texttt{policy-service-api} & Domínio & 4 & 31 & 0,94 \\
+        micronaut-microservices-poc & \texttt{pricing-service-api} & Domínio & 2 & 24 & 0,96 \\
+        mif & \texttt{util} & Técnico & 4 & 28 & 0,36 \\
+        chaos-monkey-spring-boot-demo & \texttt{shared} & Domínio & 3 & 1 & 1,00 \\
+        pravega & \texttt{authplugin} & Técnico & 4 & 14 & 0,86 \\
+        pravega & \texttt{bindings} & Técnico & 2 & 65 & 0,46 \\
+        pravega & \texttt{client} & Domínio & 4 & 480 & 0,37 \\
+        pravega & \texttt{cluster} & Misto & 3 & 9 & 0,78 \\
+        pravega & \texttt{common} & Técnico & 5 & 404 & 0,41 \\
+        pravega & \texttt{contracts} & Domínio & 3 & 64 & 0,70 \\
+        pravega & \texttt{health} & Técnico & 3 & 6 & 0,67 \\
+        pravega & \texttt{health-bindings} & Técnico & 3 & 5 & 0,80 \\
+        pravega & \texttt{metrics} & Técnico & 4 & 92 & 0,52 \\
+        pravega & \texttt{rest} & Técnico & 3 & 4 & 1,00 \\
+        pravega & \texttt{security} & Misto & 4 & 9 & 1,00 \\
+        pravega & \texttt{server} & Domínio & 2 & 332 & 0,32 \\
+        pravega & \texttt{storage} & Domínio & 3 & 150 & 0,47 \\
+        consent-manager & \texttt{commons} & Misto & 3 & 13 & 0,62 \\
+        scaffold-cloud & \texttt{scaffold-business-sys-api} & Domínio & 6 & 26 & 0,96 \\
+        scaffold-cloud & \texttt{scaffold-business-thirdparty-api} & Domínio & 6 & 2 & 1,00 \\
+        scaffold-cloud & \texttt{scaffold-core-code} & Técnico & 6 & 26 & 0,73 \\
+        scaffold-cloud & \texttt{scaffold-core-common} & Técnico & 8 & 37 & 0,78 \\
+        scaffold-cloud & \texttt{scaffold-feign-sys} & Domínio & 3 & 6 & 0,83 \\
+        scaffold-cloud & \texttt{scaffold-feign-thirdparty} & Domínio & 3 & 1 & 0,00 \\
+        spinnaker & \texttt{fiat-api} & Técnico & 9 & 10 & 0,80 \\
+        spinnaker & \texttt{fiat-core} & Domínio & 10 & 5 & 0,80 \\
+        spinnaker & \texttt{keel-core} & Domínio & 2 & 5 & 0,80 \\
+        spinnaker & \texttt{keel-ec2-plugin} & Domínio & 2 & 5 & 0,80 \\
+        spinnaker & \texttt{keel-sql} & Domínio & 2 & 9 & 0,67 \\
+        spinnaker & \texttt{kork-artifacts} & Misto & 10 & 11 & 0,45 \\
+        spinnaker & \texttt{kork-artifacts-sql} & Técnico & 2 & 1 & 1,00 \\
+        spinnaker & \texttt{kork-cloud-config-server} & Técnico & 3 & 3 & 0,67 \\
+        spinnaker & \texttt{kork-config} & Técnico & 9 & 0 & -- \\
+        spinnaker & \texttt{kork-core} & Técnico & 11 & 10 & 0,50 \\
+        spinnaker & \texttt{kork-exceptions} & Técnico & 11 & 1 & 1,00 \\
+        spinnaker & \texttt{kork-plugins} & Técnico & 11 & 13 & 0,62 \\
+        spinnaker & \texttt{kork-retrofit} & Técnico & 11 & 10 & 0,70 \\
+        spinnaker & \texttt{kork-web} & Técnico & 11 & 18 & 0,56 \\
+        spinnaker & \texttt{orca-core} & Domínio & 2 & 34 & 0,35 \\
+        \bottomrule
+    \end{tabular}
+}{
+    \Fonte{Elaborado pelos autores. O componente \texttt{kork-config} não teve \textit{commits} no período mapeado.}
+}
+\end{quadro}
