@@ -1,0 +1,14 @@
+\apendice{Protocolo da busca bibliográfica}
+\label{ap:busca}
+
+A busca por trabalhos relacionados foi feita na ACM Digital Library, no IEEE Xplore e no Google Scholar, aplicando a string abaixo a título, resumo e palavras-chave (no Google Scholar, ao texto indexado).
+
+\begin{verbatim}
+("microservice*")
+AND ("shared librar*" OR "shared code" OR "common librar*"
+     OR "code clone*" OR "reuse")
+AND ("logical coupling" OR "co-change" OR "co-evolution"
+     OR "coupling" OR "autonomy")
+\end{verbatim}
+
+Foram incluídos estudos revisados por pares, em inglês ou português, publicados a partir de 2014, que tratam de acoplamento, co-mudança, reuso ou compartilhamento de código entre microsserviços. Foram excluídos os estudos que apenas mencionam microsserviços sem analisar a relação entre serviços, a literatura cinzenta, pôsteres, editoriais e propostas sem resultados, além de textos indisponíveis e duplicatas.

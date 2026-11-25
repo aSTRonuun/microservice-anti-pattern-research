@@ -1,5 +1,5 @@
-\section{Metodologia}
-\label{sec:metodologia}
+\chapter{Metodologia}
+\label{cap:metodologia}
 
 Este estudo conduz uma investigação empírica baseada em mineração de repositórios de software aplicada a sistemas de microsserviços de código aberto escritos em Java. A abordagem combina análise estática de dependências entre serviços e componentes, mineração do histórico de \textit{commits} e classificação manual do conteúdo dos componentes compartilhados. A Figura~\ref{fig:diagrama-atividade} apresenta uma visão geral das atividades do estudo.
 
@@ -13,8 +13,8 @@ Este estudo conduz uma investigação empírica baseada em mineração de reposi
     }
 \end{figure}
 
-\subsection{Questões de Pesquisa}
-\label{subsec:rqs}
+\section{Questões de Pesquisa}
+\label{sec:rqs}
 
 Para investigar o impacto do reuso interno na autonomia dos serviços, o estudo busca responder a três questões de pesquisa:
 
@@ -24,8 +24,8 @@ Para investigar o impacto do reuso interno na autonomia dos serviços, o estudo 
     \item \textbf{RQ3:} Em que condições o reuso de um componente compromete a autonomia dos serviços que dependem dele?
 \end{itemize}
 
-\subsection{Definições Operacionais}
-\label{subsec:definicoes}
+\section{Definições Operacionais}
+\label{sec:definicoes}
 
 Para garantir consistência na análise estática dos repositórios, adotam-se as seguintes definições operacionais:
 
@@ -35,8 +35,8 @@ Para garantir consistência na análise estática dos repositórios, adotam-se a
     \item \textbf{Abrangência:} Número total de serviços que dependem de um componente compartilhado (direta ou transitivamente), registrando-se separadamente a quantidade de dependentes diretos.
 \end{itemize}
 
-\subsection{Base de Amostragem e Critérios de Seleção}
-\label{subsec:selecao}
+\section{Base de Amostragem e Critérios de Seleção}
+\label{sec:selecao}
 
 A base de amostragem resulta da união (sem duplicatas por URL) de dois conjuntos públicos consolidados na literatura: (i) o conjunto de Rahman, Panichella e Taibi (2019), composto por 20 projetos do GitHub; e (ii) o conjunto de Amoroso d'Aragona et al.\ (2024), contendo 378 projetos rotulados manualmente a partir do \textit{World of Code}. A inclusão do segundo conjunto justifica-se porque uma pré-triagem realizada em 13 de novembro de 2026 no conjunto de Rahman, Panichella e Taibi (2019) aplicou sequencialmente os critérios I2 a I5 a 20 candidatos e reteve apenas quatro: \texttt{microservices-patterns/ftgo-application} (295 \textit{commits}), \texttt{ewolff/microservice} (140), \texttt{spring-petclinic/spring-petclinic-microservices} (768) e \texttt{spinnaker/spinnaker} (51.216 — a verificar, pois o instantâneo de 2019 registrava 1.669 \textit{commits}).
 
@@ -55,8 +55,8 @@ Como critérios de exclusão, descartam-se repositórios marcados como \textit{f
 
 O procedimento de seleção ocorre em quatro etapas: (1) triagem automática via API do GitHub para \textbf{I1}--\textbf{I5} e \textbf{E1}--\textbf{E2}; (2) ordenação alfabética por \texttt{owner/repo} em minúsculas seguida de embaralhamento determinístico em Python com a semente fixa \texttt{865681335}, sorteada com \texttt{secrets.randbelow(2\^{}32)} em 13 de novembro de 2026, antes de qualquer consulta ao código-fonte dos candidatos; (3) exame sequencial por análise estática para verificar \textbf{I6} e \textbf{I7}, interrompendo a busca ao atingir o limite de oito sistemas aprovados (ou analisando todos os aprovados caso a lista se esgote antes); e (4) registro integral do funil de seleção, permitindo calcular a prevalência de compartilhamento entre todos os sistemas examinados. Os limiares de \textbf{I3} e \textbf{I5} foram definidos a priori, antes de qualquer consulta ao GitHub; o critério \textbf{I4} (linguagem Java) foi incluído após a pré-triagem revelar a predominância de outras linguagens no conjunto de Rahman, Panichella e Taibi (2019).
 
-\subsection{Coleta de Dados e Métricas}
-\label{subsec:coleta-metricas}
+\section{Coleta de Dados e Métricas}
+\label{sec:coleta-metricas}
 
 Para os sistemas selecionados, o histórico completo do ramo principal será extraído utilizando a biblioteca \textit{PyDriller}, desconsiderando \textit{commits} de \textit{merge}. Cada arquivo modificado será mapeado ao diretório do módulo de \textit{build} correspondente (serviço ou componente compartilhado); arquivos que não pertençam ao diretório de nenhum módulo de \textit{build} são desconsiderados no cômputo da co-mudança. Adicionalmente, dois avaliadores independentes classificarão manualmente o código de cada componente compartilhado em três categorias — \textit{técnico}, \textit{domínio} ou \textit{misto} — registrando o grau de concordância entre avaliadores. Uma amostra aleatória de até 20 \textit{commits} multisserviço por sistema (utilizando a mesma semente \texttt{865681335}) também será inspecionada manualmente para verificar se a co-mudança reflete dependência real.
 
@@ -85,8 +85,8 @@ A Tabela~\ref{tab:metricas} sintetiza as métricas definidas para responder às 
 }
 \end{table}
 
-\subsection{Estratégia de Análise}
-\label{subsec:analise}
+\section{Estratégia de Análise}
+\label{sec:analise}
 
 A análise estatística será conduzida por sistema e de forma agregada, utilizando Python (\textit{pandas} e \textit{SciPy}):
 \begin{itemize}
@@ -96,8 +96,8 @@ A análise estatística será conduzida por sistema e de forma agregada, utiliza
     \item \textbf{Análise de sensibilidade:} Recálculo das métricas de co-mudança removendo \textit{commits} acima do percentil 95 de arquivos modificados em cada sistema, mitigando o viés de alterações em lote.
 \end{itemize}
 
-\subsection{Ameaças à Validade}
-\label{subsec:validade}
+\section{Ameaças à Validade}
+\label{sec:validade}
 
 \begin{itemize}
     \item \textbf{Validade de construção:} A co-mudança no repositório funciona como indício histórico de coordenação, não medindo diretamente a capacidade técnica de implantação independente. Refatorações amplas podem gerar falsos positivos, mitigados pelo corte no percentil 95 e pela inspeção manual de amostra. Além disso, a definição de componente cobre apenas dependências declaradas nos arquivos de \textit{build}, não capturando código duplicado entre módulos.
