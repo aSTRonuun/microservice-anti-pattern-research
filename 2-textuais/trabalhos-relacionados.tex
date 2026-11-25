@@ -3,7 +3,7 @@
 
 Os trabalhos mais próximos desta proposta se dividem pelo tipo de evidência. Um grupo minera repositórios para medir co-evolução entre serviços. O outro parte da experiência de praticantes para descrever o que o compartilhamento causa.
 
-\section{Mineração de repositórios}
+\section{Estudos de mineração de repositórios}
 \label{sec:mineracao}
 
 \citeonline{assuncao2023} analisam 11 sistemas de código aberto, com 7.319 \textit{commits} e 99.804 mudanças atômicas, e concluem que os serviços raramente mudam de forma isolada. Entre as causas que apontam estão a refatoração de APIs compartilhadas e as dependências de bibliotecas externas. É o trabalho mais próximo desta proposta, pois também usa o histórico de repositórios para observar a independência entre serviços. Diferencia-se, porém, em dois pontos: as mudanças foram rotuladas pelos próprios autores, e as bibliotecas aparecem como uma causa entre várias, sem que se isole o efeito dos componentes internos compartilhados, que é o foco deste estudo.
@@ -45,4 +45,5 @@ Há acordo de que compartilhar cria dependência entre serviços e entre equipes
 \section{Lacuna de pesquisa}
 \label{sec:lacuna}
 
-Os estudos de mineração medem o acoplamento entre microsserviços pela co-mudança no histórico de \textit{commits} \cite{aragona2023,assuncao2023}, sem separar a parcela que vem de componentes compartilhados. Já o efeito do compartilhamento sobre a autonomia foi descrito a partir de entrevistas e estudos de caso \cite{taibi2018,detoledo2020,badampudi2025}, e \citeonline{taibi2018} reconhecem que a nocividade apontada pelos entrevistados ainda precisa de validação empírica. Nas bases consultadas (ACM Digital Library, IEEE Xplore e Google Scholar, com a string e os critérios do Apêndice~ef{ap:busca}), não identificamos estudo que relacione a co-mudança entre serviços a componentes internos compartilhados, extraindo a evidência do código e do histórico. Este trabalho busca preencher essa lacuna ao estimar quanto da co-mudança acompanha esses componentes e em que situações o compartilhamento impede a evolução independente dos serviços.
+Os estudos de mineração medem o acoplamento entre microsserviços pela co-mudança no histórico de \textit{commits} \cite{aragona2023,assuncao2023}, sem separar a parcela que vem de componentes compartilhados. Já o efeito do compartilhamento sobre a autonomia foi descrito a partir de entrevistas e estudos de caso \cite{taibi2018,detoledo2020,badampudi2025}, e \citeonline{taibi2018} reconhecem que a nocividade apontada pelos entrevistados ainda precisa de validação empírica. Nas bases consultadas (ACM Digital Library, IEEE Xplore e Google Scholar, com a string e os critérios do Apêndice~
+ef{ap:busca}), não identificamos estudo que relacione a co-mudança entre serviços a componentes internos compartilhados, extraindo a evidência do código e do histórico. Este trabalho busca preencher essa lacuna ao estimar quanto da co-mudança acompanha esses componentes e em que situações o compartilhamento impede a evolução independente dos serviços.

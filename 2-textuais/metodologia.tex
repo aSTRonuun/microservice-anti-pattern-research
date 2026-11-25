@@ -13,7 +13,7 @@ Este estudo é uma investigação empírica baseada em mineração de repositór
     }
 \end{figure}
 
-\section{Questões de Pesquisa}
+\section{Questões de pesquisa}
 \label{sec:rqs}
 
 Para investigar o impacto do reuso interno na autonomia dos serviços, o estudo busca responder a três questões de pesquisa:
@@ -24,7 +24,7 @@ Para investigar o impacto do reuso interno na autonomia dos serviços, o estudo 
     \item \textbf{RQ3:} Em que condições o reuso de um componente compromete a autonomia dos serviços que dependem dele?
 \end{itemize}
 
-\section{Definições Operacionais}
+\section{Definições operacionais}
 \label{sec:definicoes}
 
 A análise estática dos repositórios seguiu as definições abaixo.
@@ -36,7 +36,7 @@ A análise estática dos repositórios seguiu as definições abaixo.
     \item \textbf{Componente universal:} componente cuja abrangência cobre todos os serviços de negócio do sistema.
 \end{itemize}
 
-\section{Base de Amostragem e Critérios de Seleção}
+\section{Base de amostragem e critérios de seleção}
 \label{sec:selecao}
 
 A base de amostragem é a união, sem duplicatas por URL, de dois conjuntos públicos: o de \citeonline{rahman2019}, com 20 projetos do GitHub, e o de \citeonline{aragona2024dataset}, com 378 projetos rotulados manualmente a partir do \textit{World of Code}. Deste último foi usada a versão filtrada publicada pelos autores (versão 4, de fevereiro de 2024), que já exclui projetos arquivados. O segundo conjunto foi incluído porque uma pré-triagem feita em 13 de novembro de 2026 no conjunto de \citeonline{rahman2019} aplicou os critérios I2 a I5 aos 20 candidatos e reteve apenas quatro: \texttt{microservices-patterns/ftgo-application}, \texttt{ewolff/microservice}, \texttt{spring-petclinic/spring-petclinic-microservices} e \texttt{spinnaker/spinnaker}.
@@ -56,7 +56,7 @@ Foram excluídos os repositórios marcados como \textit{fork} pela API do GitHub
 
 A seleção teve quatro etapas. Na primeira, a API do GitHub foi usada para aplicar \textbf{I1} a \textbf{I5}, \textbf{E1} e \textbf{E2}, e as respostas foram guardadas para permitir a repetição exata da triagem. Na segunda, os aprovados foram ordenados alfabeticamente por \texttt{owner/repo} em minúsculas e embaralhados em Python com a semente fixa \texttt{865681335}, sorteada com \texttt{secrets.randbelow(2\^{}32)} em 13 de novembro de 2026, antes de qualquer consulta ao código-fonte dos candidatos. Na terceira, os candidatos foram examinados um a um, na ordem sorteada, por análise estática para verificar \textbf{I6} e \textbf{I7}, até se obterem oito sistemas aprovados. Os arquivos de \textit{build} de cada aprovado, e de cada reprovado em \textbf{I7} com ao menos três serviços, foram conferidos manualmente. Quando essa conferência revelou um erro do analisador, o erro foi corrigido e o exame foi refeito desde o primeiro candidato, para que todos fossem avaliados pela mesma versão. Na quarta etapa, o funil completo foi registrado, o que permite estimar a prevalência de compartilhamento entre os sistemas examinados. Os limiares de \textbf{I3} e \textbf{I5} foram definidos antes de qualquer consulta ao GitHub. O critério \textbf{I4} foi incluído depois que a pré-triagem mostrou a predominância de outras linguagens no conjunto de \citeonline{rahman2019}.
 
-\section{Coleta de Dados e Métricas}
+\section{Coleta de dados e métricas}
 \label{sec:coleta-metricas}
 
 Para cada sistema selecionado, o histórico completo do ramo padrão foi extraído com a biblioteca \textit{PyDriller}, sem os \textit{commits} de \textit{merge}. Cada arquivo modificado foi associado ao módulo de \textit{build} cujo diretório é o prefixo mais longo do seu caminho, usando a estrutura de módulos da versão mais recente do repositório. Arquivos fora de qualquer módulo não entram no cálculo da co-mudança. Como alguns sistemas foram reorganizados ao longo do tempo, registrou-se também a cobertura do mapeamento, isto é, a parcela dos \textit{commits} que altera ao menos um módulo atual.
@@ -91,7 +91,7 @@ A Tabela~\ref{tab:metricas} resume as métricas usadas para responder às quest�
 }
 \end{table}
 
-\section{Estratégia de Análise}
+\section{Estratégia de análise}
 \label{sec:analise}
 
 A análise foi feita por sistema e de forma agregada, em Python (\textit{pandas} e \textit{SciPy}).
@@ -102,7 +102,7 @@ A análise foi feita por sistema e de forma agregada, em Python (\textit{pandas}
     \item \textbf{Análise de sensibilidade:} recálculo das métricas de co-mudança sem os \textit{commits} acima do percentil 95 do número de arquivos alterados em cada sistema, calculado sobre os \textit{commits} mapeados, para reduzir o peso das alterações em lote.
 \end{itemize}
 
-\section{Ameaças à Validade}
+\section{Ameaças à validade}
 \label{sec:validade}
 
 \begin{itemize}
